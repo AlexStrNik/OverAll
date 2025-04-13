@@ -217,6 +217,9 @@ class WindowManagement {
         let arrayRef = windowIds.withUnsafeMutableBufferPointer { ptr in
             SLSHWCaptureWindowList(self.connectionId, ptr.baseAddress, 1, 0)
         }
+        if arrayRef == nil {
+            return nil
+        }
         let array = arrayRef!.takeUnretainedValue() as NSArray
         defer { arrayRef?.release() }
         
