@@ -32,15 +32,7 @@ struct PromptView: View {
                             } else {
                                 WindowManagement.default.pin(window: window)
                             }
-                            allWindows = allWindows.map {
-                                var _window = $0
-                                
-                                if _window.wid == window.wid {
-                                    _window.isPinned.toggle()
-                                }
-                                
-                                return _window
-                            }
+                            allWindows = WindowManagement.default.allWindows()
                         }) {
                             VStack {
                                 if let preview = window.preview {

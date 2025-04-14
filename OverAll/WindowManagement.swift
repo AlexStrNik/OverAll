@@ -196,14 +196,14 @@ class WindowManagement {
                 let isPinned = pinnedWindows.keys.contains(windowID)
                 let pinnedWindow = self.pinnedWindows[windowID]
                 
-                return SLSWindow(
+                return isPinned ? pinnedWindow : SLSWindow(
                     wid: windowID,
                     title: titleUnwrapped as String,
                     frame: frame,
                     level: level,
                     subLevel: subLevel,
-                    spaceId: isPinned ? pinnedWindow!.spaceId : spaces[0],
-                    preview: isPinned ? pinnedWindow!.preview : self.captureImage(for: windowID),
+                    spaceId: spaces[0],
+                    preview: self.captureImage(for: windowID),
                     isPinned: isPinned
                 )
             }
@@ -268,7 +268,9 @@ extension WindowManagement {
 
         SLSOrderWindow(self.connectionId, window.wid, 1, 0)
         
-        pinnedWindows[window.wid] = window
+        var pinnedWindow = window
+        pinnedWindow.isPinned = true
+        pinnedWindows[window.wid] = pinnedWindow
     }
     
     func unpin(window: SLSWindow) -> Void {
